@@ -38,6 +38,16 @@ homicides_baltimore$month <- as.numeric(homicides_baltimore$month)
 homicides_baltimore$day <- as.numeric(homicides_baltimore$day)
 homicides_baltimore$date <- as.Date(homicides_baltimore$date)
 
+```
+
+```{r}
+# making year month for Y axis
+
+library(zoo)
+
+hom_balt <- homicides_baltimore %>%
+  mutate(yearmonth = as.yearmon(date, "%m/%Y"))
+str(hom_balt)
 
 ```
 
