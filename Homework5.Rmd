@@ -8,6 +8,7 @@ date: '2022-11-25'
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ```{r}
 library(readr)
 library(tidyverse)
@@ -16,4 +17,16 @@ homicides <- read_csv("homicide-data.csv")
 ```
 
 ## Making Graph
+
+```{r}
+#creating separate y,m,d#
+homicides_baltimore <- homicides %>% 
+  mutate(city_name = str_c(city, state, sep = ",")) %>% 
+  mutate(year = str_sub(reported_date, start = 1, end = 4)) %>% 
+  mutate(month = str_sub(reported_date, start = 5, end = 6)) %>% 
+  mutate(day = str_sub(reported_date, start = 7, end = 8)) %>% 
+  mutate(date = str_c(year, month, day, sep = "/")) %>% 
+  mutate(month_year = str_c(month, year, sep = "/")) %>% 
+  filter(city == "Baltimore") 
+```
 
