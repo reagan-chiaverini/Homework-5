@@ -16,7 +16,7 @@ library(lubridate)
 homicides <- read_csv("homicide-data.csv")
 ```
 
-## Making Graph
+## Making Graphs
 
 ```{r}
 #creating separate y,m,d#
@@ -29,4 +29,17 @@ homicides_baltimore <- homicides %>%
   mutate(month_year = str_c(month, year, sep = "/")) %>% 
   filter(city == "Baltimore") 
 ```
+
+```{r}
+#making variables numeric
+
+homicides_baltimore$year <- as.numeric(homicides_baltimore$year)
+homicides_baltimore$month <- as.numeric(homicides_baltimore$month)
+homicides_baltimore$day <- as.numeric(homicides_baltimore$day)
+homicides_baltimore$date <- as.Date(homicides_baltimore$date)
+
+
+```
+
+
 
