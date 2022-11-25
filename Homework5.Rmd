@@ -1,0 +1,19 @@
+---
+title: "Homework5_RChiaverini"
+output: html_document
+date: '2022-11-25'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lubridate)
+homicides <- read_csv("homicide-data.csv")
+```
+
+## Making Graph
+
