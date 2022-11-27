@@ -1,0 +1,16 @@
+---
+title: "Homework 5 Graph"
+output: html_document
+date: '2022-11-27'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lubridate)
+homicides <- read_csv("homicide-data.csv")
+```
