@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(tidyverse)
 library(lubridate)
+library(nplyr)
 homicides <- read_csv("homicide-data.csv")
 ```
 
@@ -47,6 +48,7 @@ library(zoo)
 
 hom_balt <- homicides_baltimore %>%
   mutate(yearmonth = as.yearmon(date, "%m/%Y"))
+
 ```
 
 
@@ -55,14 +57,30 @@ hom_balt1 <- hom_balt %>%
   mutate(uid_new = str_sub(uid, start = 5, end = 10)) %>%
   mutate(obs = uid_new) 
 
+hom_balt2 <- hom_balt1 %>% 
+  mutate(season = case_when(
+      month %in% 10:12 ~ "Fall",
+      month %in%  1:3  ~ "Winter",
+      month %in%  4:6  ~ "Spring",
+      TRUE ~ "Summer"))
 
-hom_by_month1 <- hom_balt1 %>% 
-  select(obs, city_name, year, date, yearmonth) %>% 
+homicides_month <- hom_balt2 %>% 
+  select(obs, city_name, year, date, yearmonth, month, season) %>% 
   group_by(yearmonth) %>% 
-  nest() %>% 
-  summarize(monthly_homicides = n()) %>% 
-  unnest(c(yearmonth, monthly_homicides))
+  summarize(monthly_homicides = n(),
+            obs = obs,
+            city_name = city_name,
+            year = year,
+            date = date,
+            season = season)
+
+```
 
 
+```{r}
+homicides_month %>% 
+  ggplot() +
+  geom_bar(aes(x = date, y = monthly_homicides, color = season)) + 
+  labs(x = "Date", y = "Monthly Homicides", title = "Homicides in Baltimore, MD")
 ```
 
