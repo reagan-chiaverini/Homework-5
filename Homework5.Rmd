@@ -47,9 +47,22 @@ library(zoo)
 
 hom_balt <- homicides_baltimore %>%
   mutate(yearmonth = as.yearmon(date, "%m/%Y"))
-str(hom_balt)
-
 ```
 
 
+```{r}
+hom_balt1 <- hom_balt %>%
+  mutate(uid_new = str_sub(uid, start = 5, end = 10)) %>%
+  mutate(obs = uid_new) 
+
+
+hom_by_month1 <- hom_balt1 %>% 
+  select(obs, city_name, year, date, yearmonth) %>% 
+  group_by(yearmonth) %>% 
+  nest() %>% 
+  summarize(monthly_homicides = n()) %>% 
+  unnest(c(yearmonth, monthly_homicides))
+
+
+```
 

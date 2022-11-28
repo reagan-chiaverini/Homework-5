@@ -8,9 +8,17 @@ date: '2022-11-27'
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Reading in Data 
 ```{r}
 library(readr)
 library(tidyverse)
 library(lubridate)
 homicides <- read_csv("homicide-data.csv")
 ```
+
+## Pick City
+```{r}
+homicides_denver <- homicides %>% 
+  filter(city == "Denver")
+```
+
