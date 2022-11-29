@@ -82,18 +82,20 @@ df <- homicides_month %>%
 
 
 
-```{r, fig.width= 8, fig.height= 3}
-dates_vline <- as.Date(c("2015-04-12"))
+```{r, fig.width= 12, fig.height= 3}
 v_line <- "2015-04-12"   
 
 df %>% 
   ggplot(aes(x = date, y = monthly_homicides, fill = season)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", width = 35, color = "darkgrey") +
+  scale_fill_manual(values = c("grey","lightblue")) +
   labs(x = "Date", y = "Monthly Homicides") +
   ggtitle("Homicides in Baltimore, MD") +
   geom_vline(aes(xintercept= as.numeric(as.Date(v_line))),
              linetype=3,col="red", size =1.5) +
-  scale_fill_manual(values = c("summer" = "lightgrey", "winter"= "lightblue")) +
-  theme(legend.position = "bottom")
+  theme_dark() +
+  theme(legend.position = "bottom") 
+ 
+
 ```
 
