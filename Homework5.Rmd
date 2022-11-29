@@ -82,6 +82,14 @@ df <- homicides_month %>%
 
 
 ```{r}
+dates_vline <- as.Date(c("2015-04-12"))
 
+dates_vline <- which(df$date %in% dates_vline)
+
+df %>% 
+  ggplot(aes(x = date, y = monthly_homicides, color = season)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Date", y = "Monthly Homicides") +
+  ggtitle("Homicides in Baltimore, MD") 
 ```
 
