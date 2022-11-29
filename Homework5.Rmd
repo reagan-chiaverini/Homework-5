@@ -79,13 +79,9 @@ df <- homicides_month %>%
 
 ```
 
-  select(obs, city_name, year, date, yearmonth, month, season) %>% 
 
 
 ```{r}
-homicides_month %>% 
-  ggplot() + 
-  geom_bar(aes(x = year, y = monthly_homicides, color = season))
-  labs(x = "Date", y = "Monthly Homicides", title = "Homicides in Baltimore, MD")
+
 ```
 
