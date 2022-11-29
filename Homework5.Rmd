@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(readr)
+library(ggthemes)
 library(tidyverse)
 library(lubridate)
 library(nplyr)
@@ -59,9 +60,9 @@ hom_balt <- hom_balt %>%
 
 hom_balt <- hom_balt %>% 
   mutate(season = case_when(
-      month %in% 10:12 ~ "Fall",
+      month %in% 10:12 ~ "Winter",
       month %in%  1:3  ~ "Winter",
-      month %in%  4:6  ~ "Spring",
+      month %in%  4:6  ~ "Summer",
       TRUE ~ "Summer"))
 
 homicides_month <- hom_balt %>% 
@@ -81,15 +82,18 @@ df <- homicides_month %>%
 
 
 
-```{r}
+```{r, fig.width= 8, fig.height= 3}
 dates_vline <- as.Date(c("2015-04-12"))
-
-dates_vline <- which(df$date %in% dates_vline)
+v_line <- "2015-04-12"   
 
 df %>% 
-  ggplot(aes(x = date, y = monthly_homicides, color = season)) +
+  ggplot(aes(x = date, y = monthly_homicides, fill = season)) +
   geom_bar(stat = "identity") +
   labs(x = "Date", y = "Monthly Homicides") +
-  ggtitle("Homicides in Baltimore, MD") 
+  ggtitle("Homicides in Baltimore, MD") +
+  geom_vline(aes(xintercept= as.numeric(as.Date(v_line))),
+             linetype=3,col="red", size =1.5) +
+  scale_fill_manual(values = c("summer" = "lightgrey", "winter"= "lightblue")) +
+  theme(legend.position = "bottom")
 ```
 
