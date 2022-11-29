@@ -53,34 +53,39 @@ hom_balt <- homicides_baltimore %>%
 
 
 ```{r}
-hom_balt1 <- hom_balt %>%
+hom_balt <- hom_balt %>%
   mutate(uid_new = str_sub(uid, start = 5, end = 10)) %>%
   mutate(obs = uid_new) 
 
-hom_balt2 <- hom_balt1 %>% 
+hom_balt <- hom_balt %>% 
   mutate(season = case_when(
       month %in% 10:12 ~ "Fall",
       month %in%  1:3  ~ "Winter",
       month %in%  4:6  ~ "Spring",
       TRUE ~ "Summer"))
 
-homicides_month <- hom_balt2 %>% 
+homicides_month <- hom_balt %>% 
   select(obs, city_name, year, date, yearmonth, month, season) %>% 
   group_by(yearmonth) %>% 
   summarize(monthly_homicides = n(),
-            obs = obs,
             city_name = city_name,
             year = year,
             date = date,
-            season = season)
+            season = season,
+            .groups = 'drop')
+
+df <- homicides_month %>%
+  distinct(yearmonth, .keep_all = TRUE)
 
 ```
+
+  select(obs, city_name, year, date, yearmonth, month, season) %>% 
 
 
 ```{r}
 homicides_month %>% 
-  ggplot() +
-  geom_bar(aes(x = date, y = monthly_homicides, color = season)) + 
+  ggplot() + 
+  geom_bar(aes(x = year, y = monthly_homicides, color = season))
   labs(x = "Date", y = "Monthly Homicides", title = "Homicides in Baltimore, MD")
 ```
 
